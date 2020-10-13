@@ -1,6 +1,6 @@
 package com.example.ITAcademy.DiceRollerMongoDB.dao;
 
-import java.io.Serializable;
+//import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;

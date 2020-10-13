@@ -1,7 +1,7 @@
 package com.example.ITAcademy.DiceRollerMongoDB.dao;
 
 
-import java.io.Serializable;
+//import java.io.Serializable;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

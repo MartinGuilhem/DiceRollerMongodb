@@ -1,6 +1,6 @@
 package com.example.ITAcademy.DiceRollerMongoDB.dto;
 
-import java.io.Serializable;
+//import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +14,6 @@ import com.mongodb.lang.NonNull;
 public class Player /* implements Serializable */{
 		
 	// ATTRIBUTES
-	
     @Transient
     public static final String SEQUENCE_NAME = "users_sequence";
 

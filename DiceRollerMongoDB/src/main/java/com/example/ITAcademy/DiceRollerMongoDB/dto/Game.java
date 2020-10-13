@@ -1,6 +1,6 @@
 package com.example.ITAcademy.DiceRollerMongoDB.dto;
 
-import java.io.Serializable;
+//import java.io.Serializable;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.mongodb.lang.NonNull;
 
 @Document(collection = "game")
-public class Game implements Serializable { // NO SE PORQUE NO LE GUSTA EL SERIALIZABLE
+public class Game /*implements Serializable*/ { // NO SE PORQUE NO LE GUSTA EL SERIALIZABLE
 
 	// ATTRIBUTES
 	@Id
@@ -28,8 +28,8 @@ public class Game implements Serializable { // NO SE PORQUE NO LE GUSTA EL SERIA
 	// CONSTRUCTORS
 	public Game() {}
 
-	public Game(Long id, int dice1, int dice2, boolean won, Long player_id) {
-		this.id = id;
+	public Game(/*Long id,*/ int dice1, int dice2, boolean won, Long player_id) {
+//		this.id = id;
 		this.dice1 = dice1;
 		this.dice2 = dice2;
 		this.won = won;
