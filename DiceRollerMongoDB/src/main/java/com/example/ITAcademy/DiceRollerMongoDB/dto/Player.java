@@ -1,41 +1,27 @@
 package com.example.ITAcademy.DiceRollerMongoDB.dto;
 
-//import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.mongodb.lang.NonNull;
 
 @Document(collection = "player")
-public class Player /* implements Serializable */{
+public class Player {
 		
 	// ATTRIBUTES
-    @Transient
-    public static final String SEQUENCE_NAME = "users_sequence";
 
 	@Id
 	@NonNull
 	Long id;
-
-//	Long seq;
-	
 	String name;
-	
-	//@Temporal(TemporalType.TIMESTAMP)
 	Date date = new Date(System.currentTimeMillis());
-	
 	Double winAvg;
+	List<Game> games= new ArrayList<Game>(); // Entities relationship One to Many
 
-	// Entities relationship
-	//@OneToMany(mappedBy = "player")
-	//@JsonIgnore // To fix issue with infinite recursion
-	private List<Game> game;
-
-	
 	
 		// CONSTRUCTORS
 	public Player() {}
@@ -44,12 +30,10 @@ public class Player /* implements Serializable */{
 		this.id = id;
 		this.name = addName(name);
 		this.date = new Date(System.currentTimeMillis());
+		this.winAvg=0.00;
 	}
 
 		// GETTERS & SETTERS
-	
-	
-	
 	public Long getId() {
 		return id;
 	}
@@ -85,12 +69,16 @@ public class Player /* implements Serializable */{
 			this.winAvg = winAvg;
 	}
 
-	public List<Game> getGame() {
-		return game;
+	public List<Game> getGames() {
+		return games;
 	}
 
-	public void setGame(Game game) {
-		this.game.add(game);
+	public void setGame(List<Game> games) {
+		this.games=games;
+	}
+	
+	public void addGame(Game game) {
+		this.games.add(game);
 	}
 
 		// METHODS
@@ -105,12 +93,16 @@ public class Player /* implements Serializable */{
 	// SETTING WINAVG FROM GAME
 	public void updateWinAvGames() {
 		int gamesWon = 0;
-		for (Game g : game) { 
-			if (g.isWon())
-				gamesWon++;
+		if(games.size()!=0) {
+			for (Game g : games)  
+				if (g.isWon())
+					gamesWon++;
+			double winAverage=(double) gamesWon / (double) games.size();
+			this.setWinAvg(winAverage);
 		}
-		double winAverage=(double) gamesWon / (double) game.size();
-		this.setWinAvg(winAverage);
+		else {
+			this.setWinAvg(0.00);			
+		}		
 	}
 
 	@Override

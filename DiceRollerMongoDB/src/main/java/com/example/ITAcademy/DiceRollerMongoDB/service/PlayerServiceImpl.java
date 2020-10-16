@@ -46,11 +46,12 @@ public class PlayerServiceImpl implements IPlayerService {
 	public Double getRanking(List<Player> players) {
 		double ranking=0.00;
 		double sumRanking=0.00;
-		for (int i=1;i<players.size();i++) {
+		for (int i=0;i<players.size();i++) {
 			ranking=players.get(i).getWinAvg();
-			System.out.println("\n\n\n####"+ranking+"\n\n\n");
 			sumRanking = sumRanking + ranking;
 		}
+		System.out.println("### \n\n #La suma total de los rankings es ="+sumRanking);
+		System.out.println("### \n\n #La cantidad de jugadores es ="+players.size());
 		return sumRanking / (double) players.size();
 	}
 
@@ -62,9 +63,11 @@ public class PlayerServiceImpl implements IPlayerService {
 		int i = 0;
 		double min = 100.00;
 		for (i = 0; i < players.size(); i++) {
-			if (players.get(i).getWinAvg() < min)
+			if (players.get(i).getWinAvg() < min) {
 				min = players.get(i).getWinAvg();
+				System.out.println("\n\n### ## # winAvg= "+min);
 				id = players.get(i).getId();
+			}
 		}
 		return this.getPlayer(id);
 	}
@@ -77,11 +80,13 @@ public class PlayerServiceImpl implements IPlayerService {
 		int i = 0;
 		double max = 0.00;
 		for (i = 0; i < players.size(); i++) {
-			if (players.get(i).getWinAvg() > max)
+			System.out.println("\n\n### ## winAvg "+i+"= "+players.get(i).getWinAvg());
+			if (players.get(i).getWinAvg() > max) {
 				max = players.get(i).getWinAvg();
+				System.out.println("\n\n### ## # winAvg= "+max);
 				id = players.get(i).getId();
+			}
 		}
-		System.out.println("Maximo: " + max); // SOUT test
 		return this.getPlayer(id);
 	}
 

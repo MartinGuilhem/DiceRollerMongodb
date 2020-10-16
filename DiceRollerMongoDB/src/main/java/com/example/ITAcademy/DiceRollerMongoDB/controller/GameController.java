@@ -1,5 +1,6 @@
 package com.example.ITAcademy.DiceRollerMongoDB.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,6 @@ public class GameController {
 	// PLAYER {ID} ROLLS THE DICES (CREATE GAME)
  	@PostMapping("/players/{id}/games")
  	public Game rollTheDices(@PathVariable(name ="id") Long id) {
- 		
  		Player player = playerServiceImpl.getPlayer(id);
  		Long gameId=gameServiceImpl.rollDices(player);
  		return gameServiceImpl.getGameById(gameId);	 		
@@ -38,22 +38,23 @@ public class GameController {
 	 	
 	// GET GAMES FROM PLAYER
 	@GetMapping("/players/{id}/games")
-	public List<Game> listGames(@PathVariable(name = "id") Player player) {
-		return gameServiceImpl.listGames(player);
+	public Player listGames(@PathVariable(name = "id") Long id) {
+		return playerServiceImpl.getPlayer(id);
 	}
 	
 	// DELETE ALL GAMES FROM PLAYER
 	@DeleteMapping("/players/{id}/games")
-	public String deleteGames(@PathVariable(name = "id") Player player) {
-		List<Game> games = player.getGame();
+	public String deleteGames(@PathVariable(name = "id") Long id) {
+		Player player = playerServiceImpl.getPlayer(id);
+		List<Game> games = player.getGames();
 		for (Game g : games) {
 			Long gameId = g.getId();
 			gameServiceImpl.deleteGame(gameId);
 		}
 		player.setWinAvg(0.00);
-		playerServiceImpl.updatePlayer(player);			
+		games=new ArrayList<Game>();
+		player.setGame(games);
+		playerServiceImpl.updatePlayer(player);
 		return "\n Games from " + player.getName() + " have been deleted";
 	}
-	
-
 }

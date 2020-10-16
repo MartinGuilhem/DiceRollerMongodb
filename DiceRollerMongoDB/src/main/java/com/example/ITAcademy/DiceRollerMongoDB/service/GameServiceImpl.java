@@ -33,14 +33,20 @@ public class GameServiceImpl implements IGameService {
 		
 	// Get games from player
 	@Override
-	public List<Game> listGames(Player player) {
-		return iGameDAO.findAllByPlayer(player);
+	public List<Game> listGames(Long player_id) {
+		return iGameDAO.findAllById(player_id);
 	}
 
 	// Delete Game
 	@Override
 	public void deleteGame(Long gameId) {
 		iGameDAO.deleteById(gameId);
+	}
+
+	// List all games
+	@Override
+	public List<Game> listGames() {
+		return iGameDAO.findAll();
 	}
 	
 	// Roll the dices
@@ -49,9 +55,19 @@ public class GameServiceImpl implements IGameService {
 		int dice1=(int) (Math.random()*(6-1+1)+1); 
 		int dice2=(int) (Math.random()*(6-1+1)+1); 
 		boolean won=won(dice1, dice2);
-		Game game = new Game(null, dice1, dice2, won, player);
-		this.addGame(game);
-		player.setGame(game);
+		
+		Long player_id = player.getId();
+		Game game = new Game(null, dice1, dice2, won, player_id);
+		List<Game> games = listGames();
+		if(games.size()!=0) {
+			game.setId((games.get(games.size()-1).getId())+1);
+		}
+		else {
+			game.setId((long)1);			
+		}
+		System.out.println(game.toString());
+		this.addGame(game); // save game to database
+		player.addGame(game);
 		player.updateWinAvGames();
 		playerServiceImpl.updatePlayer(player);
 		return game.getId();
