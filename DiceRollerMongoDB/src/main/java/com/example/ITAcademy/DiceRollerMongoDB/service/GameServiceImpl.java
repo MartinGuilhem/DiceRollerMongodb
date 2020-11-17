@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.ITAcademy.DiceRollerMongoDB.dao.IGameDAO;
 import com.example.ITAcademy.DiceRollerMongoDB.dto.Game;
 import com.example.ITAcademy.DiceRollerMongoDB.dto.Player;
+import com.example.ITAcademy.DiceRollerMongoDB.repository.IGameRepository;
 
 @Service
 public class GameServiceImpl implements IGameService {
@@ -15,7 +15,7 @@ public class GameServiceImpl implements IGameService {
 
 	// Use of methods from repository DAO
 	@Autowired
-	IGameDAO iGameDAO;
+	IGameRepository iGameDAO;
 	@Autowired 
 	PlayerServiceImpl playerServiceImpl;
 

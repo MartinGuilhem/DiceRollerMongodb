@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.ITAcademy.DiceRollerMongoDB.service.IPlayerService;
-import com.example.ITAcademy.DiceRollerMongoDB.dao.IPlayerDAO;
 import com.example.ITAcademy.DiceRollerMongoDB.dto.Player;
+import com.example.ITAcademy.DiceRollerMongoDB.repository.IPlayerRepository;
 
 @Service
 public class PlayerServiceImpl implements IPlayerService {
@@ -15,7 +15,7 @@ public class PlayerServiceImpl implements IPlayerService {
 	
 	// Use of methods from repository DAO
 	@Autowired
-	IPlayerDAO iPlayerDAO;
+	IPlayerRepository iPlayerDAO;
 	
 	// Create player
 	@Override
@@ -50,8 +50,6 @@ public class PlayerServiceImpl implements IPlayerService {
 			ranking=players.get(i).getWinAvg();
 			sumRanking = sumRanking + ranking;
 		}
-		System.out.println("### \n\n #La suma total de los rankings es ="+sumRanking);
-		System.out.println("### \n\n #La cantidad de jugadores es ="+players.size());
 		return sumRanking / (double) players.size();
 	}
 
